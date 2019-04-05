@@ -10,8 +10,8 @@
         <TextBlock HorizontalAlignment="Left" Margin="10,10,0,0" TextWrapping="Wrap" Text="Elegir dispositivo:" VerticalAlignment="Top"/>
         <ComboBox x:Name="cmbDispositivos" HorizontalAlignment="Left" Margin="10,31,0,0" VerticalAlignment="Top" Width="772"/>
         <Button x:Name="btnIniciar" Content="Iniciar" HorizontalAlignment="Left" Margin="10,58,0,0" VerticalAlignment="Top" Width="75" Click="btnIniciar_Click"/>
-        <Button x:Name="btnDetener" Content="Detener" HorizontalAlignment="Left" Margin="90,58,0,0" VerticalAlignment="Top" Width="75"/>
-        <Slider x:Name="sldMicrofono" HorizontalAlignment="Left" Margin="178,58,0,0" VerticalAlignment="Top" Width="21" Orientation="Vertical" Height="105"/>
+        <Button x:Name="btnDetener" Content="Detener" HorizontalAlignment="Left" Margin="90,58,0,0" VerticalAlignment="Top" Width="75" Click="btnDetener_Click"/>
+        <Slider x:Name="sldMicrofono" HorizontalAlignment="Left" Margin="178,58,0,0" VerticalAlignment="Top" Width="21" Orientation="Vertical" Height="105" Maximum="1" LargeChange="0.2" SmallChange="0.01"/>
 
     </Grid>
 </Window>
