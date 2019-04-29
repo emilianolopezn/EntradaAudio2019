@@ -111,6 +111,14 @@ namespace Entrada
 
             //FastFourierTransform.FFT()
 
+            if (promedio > 0)
+            {
+                FastFourierTransform.FFT(true, exponente, 
+                    señalCompleja);
+
+            }
+
+
         }
 
         private void btnDetener_Click(object sender, RoutedEventArgs e)
