@@ -19,6 +19,9 @@ using NAudio.Wave;
 using NAudio.Wave.SampleProviders;
 using NAudio.Dsp;
 
+using System.Diagnostics;
+
+
 namespace Entrada
 {
     /// <summary>
@@ -28,6 +31,10 @@ namespace Entrada
     {
         WaveIn waveIn;
         DispatcherTimer timer;
+        Stopwatch cronometro;
+        string letraAnterior = "";
+        string letraActual = "";
+        
         float frecuenciaFundamental = 0.0f;
 
         public MainWindow()
@@ -37,12 +44,15 @@ namespace Entrada
             timer.Interval = 
                 TimeSpan.FromMilliseconds(100);
             timer.Tick += Timer_Tick;
-
+            cronometro = new Stopwatch();
             LlenarComboDispositivos();
+
+            
         }
 
         private void Timer_Tick(object sender, EventArgs e)
         {
+            //Carro
             if (frecuenciaFundamental >= 500)
             {
                 var leftCarro = Canvas.GetLeft(imgCarro);
@@ -53,6 +63,33 @@ namespace Entrada
             else
             {
                 Canvas.SetLeft(imgCarro, 10);
+            }
+            //Texto
+            if (letraActual != "" &&
+                letraActual == letraAnterior)
+            {
+                //Evaluar si ya pasó un segundo
+                if(cronometro.ElapsedMilliseconds >=
+                    1000)
+                {
+                    txtTexto.AppendText(letraActual);
+                    letraActual = "";
+                    cronometro.Restart();
+                    if (txtTexto.Text.Length >= 2)
+                    {
+                        string texto  = txtTexto.Text.Substring(
+                            txtTexto.Text.Length - 2, 2);
+                        if (texto == "EO")
+                        {
+                            lblEO.Visibility = 
+                                Visibility.Visible;
+
+                        }
+                    }
+                }
+            } else
+            {
+                cronometro.Restart();
             }
         }
 
@@ -159,6 +196,34 @@ namespace Entrada
                     (float)(indiceSeñalConMasPresencia *
                     waveIn.WaveFormat.SampleRate) /
                     (float)valoresAbsolutos.Length;
+                letraAnterior = letraActual;
+                if (frecuenciaFundamental >= 500 && 
+                    frecuenciaFundamental <= 550)
+                {
+                    letraActual = "A";
+                }else if (frecuenciaFundamental >= 600 &&
+                    frecuenciaFundamental <= 650)
+                {
+                    letraActual = "E";
+                }
+                else if (frecuenciaFundamental >= 700 &&
+                  frecuenciaFundamental <= 750)
+                {
+                    letraActual = "I";
+                }
+                else if (frecuenciaFundamental >= 800 &&
+                  frecuenciaFundamental <= 850)
+                {
+                    letraActual = "O";
+                }
+                else if (frecuenciaFundamental >= 900 &&
+                  frecuenciaFundamental <= 950)
+                {
+                    letraActual = "U";
+                } else
+                {
+                    letraActual = "";
+                }
 
                 lblFrecuencia.Text =
                     frecuenciaFundamental.ToString("f");
